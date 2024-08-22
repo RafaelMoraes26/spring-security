@@ -24,6 +24,9 @@ public class UserEntity implements UserDetails {
     private Integer id;
 
     @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
     private String fullName;
 
     @Column(unique = true, length = 100, nullable = false)
@@ -39,6 +42,11 @@ public class UserEntity implements UserDetails {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "username"))
+    @Column(name = "role")
+    private Set<String> roles = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
