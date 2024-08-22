@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import estudos.spring_secutiry_auth.repository.UserRepository;
-import estudos.spring_secutiry_auth.repository.entity.User;
+import estudos.spring_secutiry_auth.repository.entity.UserEntity;
 
 @Configuration
 public class DatabaseInitializerConfig {
@@ -19,13 +19,13 @@ public class DatabaseInitializerConfig {
         return args -> {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-            User user = new User();
+            UserEntity user = new UserEntity();
             user.setUsername("user");
             user.setPassword(passwordEncoder.encode("password"));
             user.setRoles(Set.of("ROLE_USER"));
             userRepository.save(user);
 
-            User admin = new User();
+            UserEntity admin = new UserEntity();
             admin.setUsername("admin");
             admin.setPassword(passwordEncoder.encode("admin"));
             admin.setRoles(Set.of("ROLE_USER", "ROLE_ADMIN"));
