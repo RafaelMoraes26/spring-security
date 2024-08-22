@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ActiveProfiles("test") // Usa o perfil de teste para garantir que o banco de dados H2 em memória seja usado
-public class UserEntityRepositoryTest {
+class UserEntityRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
