@@ -67,7 +67,7 @@ Contribuições são bem-vindas! Sinta-se à vontade para enviar pull requests o
 
 ## Licença
 
-Este projeto é licenciado sob a [MIT License](LICENSE).
+Este projeto é licenciado sob a [LICENSE-CC-BY-NC-ND-4.0 License](LICENSE).
 
 ## Aviso de Propriedade
 
