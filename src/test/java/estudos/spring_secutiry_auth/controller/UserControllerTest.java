@@ -25,8 +25,15 @@ class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", roles = {"NOT_USER"})
-    void testUserEndpointWithWrongUserRole() throws Exception {
+    @WithMockUser(username = "user", roles = {"ADMIN"})
+    void testUserEndpointWithAdminRole() throws Exception {
+        mockMvc.perform(get("/user"))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "user", roles = {"NOT_USER_NOR_ADMIN"})
+    void testUserEndpointWithWrongRole() throws Exception {
         mockMvc.perform(get("/user"))
             .andExpect(status().isForbidden());
     }
