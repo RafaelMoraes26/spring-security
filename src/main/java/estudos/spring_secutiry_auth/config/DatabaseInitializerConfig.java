@@ -19,17 +19,21 @@ public class DatabaseInitializerConfig {
         return args -> {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-            UserEntity user = new UserEntity();
-            user.setUsername("user");
-            user.setPassword(passwordEncoder.encode("password"));
-            user.setRoles(Set.of("ROLE_USER"));
-            userRepository.save(user);
+            userRepository.save(UserEntity.builder()
+                .username("user")
+                .password(passwordEncoder.encode("password"))
+                .fullName("user")
+                .email("user@email.com")
+                .roles(Set.of("ROLE_USER"))
+                .build());
 
-            UserEntity admin = new UserEntity();
-            admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("admin"));
-            admin.setRoles(Set.of("ROLE_USER", "ROLE_ADMIN"));
-            userRepository.save(admin);
+            userRepository.save(UserEntity.builder()
+                .username("admin")
+                .password(passwordEncoder.encode("admin"))
+                .fullName("admin")
+                .email("admin@email.com")
+                .roles(Set.of("ROLE_USER", "ROLE_ADMIN"))
+                .build());
         };
     }
 }

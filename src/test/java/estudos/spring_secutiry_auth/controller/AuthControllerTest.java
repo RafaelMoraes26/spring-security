@@ -39,16 +39,18 @@ class AuthControllerTest {
         userRepository.deleteAll();
 
         // Adiciona um usuário de teste
-        UserEntity user = new UserEntity();
-        user.setUsername("user");
-        user.setPassword(passwordEncoder.encode("password"));
-        user.setRoles(Set.of("ROLE_USER"));
+        UserEntity user = UserEntity.builder()
+            .username("user")
+            .password(passwordEncoder.encode("password"))
+            .roles(Set.of("ROLE_USER"))
+            .build();
 
         // Adiciona um administrador de teste
-        UserEntity admin = new UserEntity();
-        admin.setUsername("admin");
-        admin.setPassword(passwordEncoder.encode("adminpass"));
-        admin.setRoles(Set.of("ROLE_ADMIN"));
+        UserEntity admin = UserEntity.builder()
+            .username("admin")
+            .password(passwordEncoder.encode("adminpass"))
+            .roles(Set.of("ROLE_ADMIN"))
+            .build();
 
         userRepository.save(user);
         userRepository.save(admin);
