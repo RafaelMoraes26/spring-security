@@ -14,8 +14,9 @@ import lombok.*;
 @Table(name = "users")
 @Getter
 @Setter
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity implements UserDetails {
 
     @Id
@@ -23,7 +24,7 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
 
     @Column(nullable = false)
