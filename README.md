@@ -3,6 +3,8 @@
 Este projeto está sendo desenvolvido com o objetivo de praticar e aprofundar o conhecimento em Spring Security. A aplicação envolve a implementação de autenticação e autorização utilizando o Spring Boot e o Spring Security, bem como a integração com um banco de dados H2 para testes.
 
 ## Funcionalidades Implementadas
+   Algumas implementações estão sendo feitas e lançadas em releases, afim de evitar conflitos entre os métodos de autenticação.
+
 
 1. **Autenticação de Usuários:**
    - Implementação de um sistema de login que autentica os usuários com base em credenciais fornecidas (nome de usuário e senha).
