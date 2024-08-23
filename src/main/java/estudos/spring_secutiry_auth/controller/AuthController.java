@@ -1,54 +1,57 @@
 package estudos.spring_secutiry_auth.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.*;
 
-import estudos.spring_secutiry_auth.dto.LoginRequest;
+import estudos.spring_secutiry_auth.dto.*;
+import estudos.spring_secutiry_auth.mapper.AuthMapper;
+import estudos.spring_secutiry_auth.repository.entity.UserEntity;
+import estudos.spring_secutiry_auth.service.AuthService;
+import estudos.spring_secutiry_auth.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-    public AuthController(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        this.authenticationManager = authenticationConfiguration.getAuthenticationManager();
+    private final AuthService authService;
+
+    private final AuthMapper authMapper;
+
+    public AuthController(JwtService jwtService, AuthService authService, AuthMapper authMapper) {
+        this.jwtService = jwtService;
+        this.authService = authService;
+        this.authMapper = authMapper;
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<SignupResponse> register(@RequestBody SignupRequest request) {
+        UserEntity registeredUser = authService.signup(request);
+
+        return ResponseEntity.ok(authMapper.toResponse(registeredUser));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
-        try {
-            // Autentica o usuário com base nas credenciais fornecidas (nome de usuário e senha).
-            Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
-            );
+    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest request) {
+        log.info("/login: {} - {}", request.getUsername(), request.getPassword());
+        UserEntity authenticatedUser = authService.authenticate(request);
+        log.info("userEntity: {}", authenticatedUser);
+        String jwtToken = jwtService.generateToken(authenticatedUser);
 
-            // Armazena o objeto de autenticação no contexto de segurança atual.
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        LoginResponse loginResponse = LoginResponse.builder()
+            .token(jwtToken)
+            .expiresIn(jwtService.getExpirationTime())
+            .build();
 
-            // Obtém a sessão HTTP associada à requisição. Se uma sessão não existir, uma nova será criada.
-            HttpSession session = request.getSession();
-
-            // Salva explicitamente o contexto de segurança na sessão HTTP, garantindo que ele seja reutilizado em requisições subsequentes.
-            session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-
-            // Retorna uma resposta indicando que o login foi bem-sucedido.
-            return ResponseEntity.ok("Login successful");
-        } catch (Exception e) {
-            // Em caso de falha na autenticação, retorna uma resposta com status 401 (Unauthorized) e a mensagem de erro correspondente.
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed: " + e.getMessage());
-        }
+        return ResponseEntity.ok(loginResponse);
     }
 
     @PostMapping("/logout")
