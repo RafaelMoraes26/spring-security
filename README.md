@@ -23,24 +23,26 @@ Este projeto está sendo desenvolvido com o objetivo de praticar e aprofundar o 
    - Uso do `@BeforeEach` para garantir que os dados de teste estejam disponíveis antes de cada teste.
    - Testes para verificar autenticação bem-sucedida e falha de autenticação.
 
+5. **Autenticação com JWT:**
+   - Implementação de autenticação baseada em tokens JWT, permitindo que a API funcione de forma stateless.
+   - Geração de tokens JWT após a autenticação bem-sucedida.
+   - Validação de tokens JWT para proteger endpoints e garantir que apenas usuários autenticados possam acessá-los.
+
 ## Funcionalidades a Serem Implementadas
 
-1. **Autenticação com JWT:**
-   - Implementar autenticação baseada em tokens JWT para melhorar a segurança e permitir que a API seja utilizada de forma stateless.
-
-2. **Configuração de Expiração de Sessão:**
+1. **Configuração de Expiração de Sessão:**
    - Configurar expiração de sessão e timeout para melhorar a segurança e a usabilidade.
 
-3. **Auditoria de Acessos:**
+2. **Auditoria de Acessos:**
    - Implementar auditoria de acessos, registrando logins, logouts e tentativas de acesso mal-sucedidas.
 
-4. **Recuperação de Senha:**
+3. **Recuperação de Senha:**
    - Implementar funcionalidade de recuperação de senha para os usuários, permitindo que redefinam suas senhas em caso de esquecimento.
 
-5. **Integração com OAuth2:**
+4. **Integração com OAuth2:**
    - Integrar a aplicação com provedores de autenticação OAuth2 (como Google ou GitHub) para oferecer login social.
 
-6. **Melhorias na UI:**
+5. **Melhorias na UI:**
    - Implementar uma interface de usuário simples para facilitar a interação com o sistema de autenticação.
 
 ## Como Executar o Projeto
