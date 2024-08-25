@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        .home-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .profile-info {
+            margin-top: 20px;
+        }
+        .profile-info img {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+<div class="home-container">
+    <h1>Bem-vindo, <span th:text="${username}">User</span>!</h1>
+    <div class="profile-info">
+        <p><strong>Login:</strong> <span th:text="${login}">login</span></p>
+        <p><strong>Bio:</strong> <span th:text="${bio}">bio</span></p>
+        <img th:src="${avatar_url}" alt="Avatar" width="150" height="150"/>
+    </div>
+</div>
+</body>
+</html>
