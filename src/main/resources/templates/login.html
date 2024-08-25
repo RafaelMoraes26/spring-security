@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        .login-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .login-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h1>Login</h1>
+    <p>Clique no botão abaixo para fazer login com o GitHub</p>
+    <form action="#" th:action="@{/oauth2/authorization/github}" method="get">
+        <button type="submit" class="login-button">Login com GitHub</button>
+    </form>
+</div>
+</body>
+</html>
